@@ -5460,7 +5460,23 @@ create_comerror(void)
 
 #endif
 
-static PyObject *
+#ifdef __i386__
+#define asmlinkage __attribute__((cdecl,regparm(0)))
+#else
+#define asmlinkage
+#endif
+
+asmlinkage void *ctypes_memmove(void *dest, const void *src, size_t n)
+{
+    return memmove(dest, src, n);
+}
+
+asmlinkage void *ctypes_memset(void *s, int c, size_t n)
+{
+    return memset(s, c, n);
+}
+
+static asmlinkage PyObject *
 string_at(const char *ptr, int size)
 {
     if (size == -1)
@@ -5493,7 +5509,7 @@ cast_check_pointertype(PyObject *arg)
     return 0;
 }
 
-static PyObject *
+static asmlinkage PyObject *
 cast(void *ptr, PyObject *src, PyObject *ctype)
 {
     CDataObject *result;
@@ -5545,7 +5561,7 @@ cast(void *ptr, PyObject *src, PyObject *ctype)
 }
 
 #ifdef CTYPES_UNICODE
-static PyObject *
+static asmlinkage PyObject *
 wstring_at(const wchar_t *ptr, int size)
 {
     Py_ssize_t ssize = size;
@@ -5703,8 +5719,8 @@ init_ctypes(void)
     PyModule_AddObject(m, "FUNCFLAG_PYTHONAPI", PyInt_FromLong(FUNCFLAG_PYTHONAPI));
     PyModule_AddStringConstant(m, "__version__", "1.1.0");
 
-    PyModule_AddObject(m, "_memmove_addr", PyLong_FromVoidPtr(memmove));
-    PyModule_AddObject(m, "_memset_addr", PyLong_FromVoidPtr(memset));
+    PyModule_AddObject(m, "_memmove_addr", PyLong_FromVoidPtr(ctypes_memmove));
+    PyModule_AddObject(m, "_memset_addr", PyLong_FromVoidPtr(ctypes_memset));
     PyModule_AddObject(m, "_string_at_addr", PyLong_FromVoidPtr(string_at));
     PyModule_AddObject(m, "_cast_addr", PyLong_FromVoidPtr(cast));
 #ifdef CTYPES_UNICODE

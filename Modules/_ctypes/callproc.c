@@ -91,8 +91,10 @@
 #define CTYPES_CAPSULE_ERROROBJ "_ctypes/callproc.c error object"
 CTYPES_CAPSULE_INSTANTIATE_DESTRUCTOR(CTYPES_CAPSULE_ERROROBJ)
 
+#if defined(CTYPES_UNICODE) && !defined(HAVE_USABLE_WCHAR_T)
 #define CTYPES_CAPSULE_WCHAR_T "_ctypes/callproc.c wchar_t buffer from unicode"
 CTYPES_CAPSULE_INSTANTIATE_DESTRUCTOR(CTYPES_CAPSULE_WCHAR_T)
+#endif
 
 /*
   ctypes maintains thread-local storage that has space for two error numbers:

@@ -460,6 +460,9 @@ CThunkObject *_ctypes_alloc_callback(PyObject *callable,
 #if defined(MS_WIN32) && !defined(_WIN32_WCE) && !defined(MS_WIN64)
     if ((flags & FUNCFLAG_CDECL) == 0)
         cc = FFI_STDCALL;
+#elif defined(X86_64) && !defined(X86_WIN64)
+    if ((flags & FUNCFLAG_CDECL) == 0)
+        cc = FFI_EFI64;
 #endif
     result = ffi_prep_cif(&p->cif, cc,
                           Py_SAFE_DOWNCAST(nArgs, Py_ssize_t, int),

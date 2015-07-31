@@ -799,6 +799,9 @@ static int _call_function_pointer(int flags,
 #if defined(MS_WIN32) && !defined(MS_WIN64) && !defined(_WIN32_WCE)
     if ((flags & FUNCFLAG_CDECL) == 0)
         cc = FFI_STDCALL;
+#elif defined(X86_64) && !defined(X86_WIN64)
+    if ((flags & FUNCFLAG_CDECL) == 0)
+        cc = FFI_EFI64;
 #endif
     if (FFI_OK != ffi_prep_cif(&cif,
                                cc,

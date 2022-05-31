@@ -1736,6 +1736,9 @@ skipitem(const char **p_format, va_list *p_va, int flags)
                 /* after 'e', only 's' and 't' is allowed */
                 goto err;
             format++;
+#if defined(__GNUC__) && __GNUC__ >= 7
+	     __attribute__ ((fallthrough));
+#endif
             /* explicit fallthrough to string cases */
         }
 

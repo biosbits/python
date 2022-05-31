@@ -19,6 +19,12 @@
 
 #include <ctype.h>
 
+#if defined(__GNUC__) && __GNUC__ >= 7
+#define fallthrough __attribute__((fallthrough));
+#else
+#define fallthrough ;
+#endif
+
 #ifndef WITH_TSC
 
 #define READ_TIMESTAMP(var)
@@ -724,12 +730,14 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
 #define TARGET_NOARG(op) \
 		TARGET_##op: \
 		opcode = op; \
+	        fallthrough; \
 		case op:\
 
 #define TARGET(op) \
 		TARGET_##op: \
 		opcode = op; \
 		oparg = NEXTARG(); \
+	        fallthrough; \
 		case op:\
 
 
@@ -2057,6 +2065,7 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
                 /* Fallthrough */
             case 1:
                 w = POP(); /* exc */
+		// fall through
             case 0: /* Fallthrough */
                 why = do_raise(w, v, u);
                 break;

@@ -796,6 +796,9 @@ PyUnicode_FromFormatV(const char *format, va_list vargs)
 #endif
                 /* fall through... */
             }
+#if defined(__GNUC__) && __GNUC__ >= 7
+	    __attribute__ ((fallthrough));
+#endif
             case '%':
                 n++;
                 break;

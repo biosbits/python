@@ -1527,6 +1527,9 @@ _Py_dg_strtod(const char *s00, char **se)
     switch (c) {
     case '-':
         sign = 1;
+#if defined(__GNUC__) && __GNUC__ >= 7
+	 __attribute__ ((fallthrough));
+#endif
         /* no break */
     case '+':
         c = *++s;
@@ -1596,6 +1599,9 @@ _Py_dg_strtod(const char *s00, char **se)
         switch (c) {
         case '-':
             esign = 1;
+#if defined(__GNUC__) && __GNUC__ >= 7
+	     __attribute__ ((fallthrough));
+#endif
             /* no break */
         case '+':
             c = *++s;
@@ -2514,6 +2520,9 @@ _Py_dg_dtoa(double dd, int mode, int ndigits,
         break;
     case 2:
         leftright = 0;
+#if defined(__GNUC__) && __GNUC__ >= 7
+	 __attribute__ ((fallthrough));
+#endif
         /* no break */
     case 4:
         if (ndigits <= 0)
@@ -2522,6 +2531,9 @@ _Py_dg_dtoa(double dd, int mode, int ndigits,
         break;
     case 3:
         leftright = 0;
+#if defined(__GNUC__) && __GNUC__ >= 7
+	 __attribute__ ((fallthrough));
+#endif
         /* no break */
     case 5:
         i = ndigits + k + 1;

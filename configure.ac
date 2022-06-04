@@ -1121,6 +1121,9 @@ yes)
       BASECFLAGS="$BASECFLAGS -fno-strict-aliasing"
     fi
 
+    # disable cast function type warning for newer compilers
+    BASECFLAGS="$BASECFLAGS -Wno-cast-function-type"
+
     # if using gcc on alpha, use -mieee to get (near) full IEEE 754
     # support.  Without this, treatment of subnormals doesn't follow
     # the standard.

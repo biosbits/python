@@ -3079,12 +3079,18 @@ compiler_visit_expr(struct compiler *c, expr_ty e)
         switch (e->v.Attribute.ctx) {
         case AugLoad:
             ADDOP(c, DUP_TOP);
+#if defined(__GNUC__) && __GNUC__ >= 7
+	     __attribute__ ((fallthrough));
+#endif
             /* Fall through to load */
         case Load:
             ADDOP_NAME(c, LOAD_ATTR, e->v.Attribute.attr, names);
             break;
         case AugStore:
             ADDOP(c, ROT_TWO);
+#if defined(__GNUC__) && __GNUC__ >= 7
+	     __attribute__ ((fallthrough));
+#endif
             /* Fall through to save */
         case Store:
             ADDOP_NAME(c, STORE_ATTR, e->v.Attribute.attr, names);

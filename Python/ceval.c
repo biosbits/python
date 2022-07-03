@@ -2694,7 +2694,7 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
                 JUMPTO(oparg);
             else
                 break;
-        	DISPATCH();
+            DISPATCH();
         }
 
         PREDICTED_WITH_ARG(POP_JUMP_IF_TRUE);
@@ -2720,7 +2720,7 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
                 ;
             else
                 break;
-        	DISPATCH();
+            DISPATCH();
         }
 
         TARGET(JUMP_IF_FALSE_OR_POP)
@@ -2745,7 +2745,7 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
                 JUMPTO(oparg);
             else
                 break;
-        	DISPATCH();
+            DISPATCH();
         }
 
         TARGET(JUMP_IF_TRUE_OR_POP)
@@ -2771,7 +2771,7 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
             }
             else
                 break;
-        	DISPATCH();
+            DISPATCH();
         }
 
         PREDICTED_WITH_ARG(JUMP_ABSOLUTE);
@@ -2829,7 +2829,7 @@ PyEval_EvalFrameEx(PyFrameObject *f, int throwflag)
             x = v = POP();
             Py_DECREF(v);
             JUMPBY(oparg);
-        	DISPATCH();
+            DISPATCH();
         }
 
         TARGET_NOARG(BREAK_LOOP)
